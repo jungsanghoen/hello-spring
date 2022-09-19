@@ -20,13 +20,16 @@ import javax.sql.DataSource;
 public class SpringConfig {
     //JDBC 용 dataSource
     //JPA 사용을 위해서도 필요
+    /*
+    @Autowired
     private DataSource dataSource;
-
+    */
+    /*
     @Autowired
     public SpringConfig(DataSource dataSource) {
         this.dataSource = dataSource;
     }
-
+    */
 
     //JPA를 위한 선언부
 

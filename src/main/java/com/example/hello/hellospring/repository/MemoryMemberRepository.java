@@ -8,6 +8,7 @@ import java.util.*;
 //인터페이스 구현체
 //@Repository
 //어노테이션으로 바로 쓸 수 있지만 자바코드로 직접 스프링빈에 등록하는 방법 기술
+@Repository
 public class MemoryMemberRepository implements MemberRepository{
 
     private static Map<Long, Member> store = new HashMap<>();
