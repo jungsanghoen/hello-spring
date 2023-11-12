@@ -2,9 +2,15 @@ package com.example.hello.hellospring.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 
 @Controller
 public class HelloController {
@@ -41,6 +47,54 @@ public class HelloController {
         Hello hello = new Hello();
         hello.setName(name);
         return hello;
+    }
+
+    @GetMapping("cookie/hello-cookie")
+    @ResponseBody
+    public Hello helloAndCookie(@RequestParam("name") String name, HttpServletResponse response)
+    {
+        Hello hello = new Hello();
+        hello.setName(name);
+
+        Cookie myCookie = new Cookie("myCookie", "thisismyCookie");
+        myCookie.setMaxAge(600);//10분
+
+        response.addCookie(myCookie);
+        return hello;
+    }
+
+    @GetMapping("cookie/get-cookie")
+    @ResponseBody
+    public myCookie getCookie(HttpServletRequest request, HttpServletResponse response)
+    {
+        Cookie[] cookies = request.getCookies();
+
+        if(cookies != null)
+        {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("myCookie")) {
+                    myCookie myCookie = new myCookie();
+                    myCookie.setCookieValue("bingo");
+                    return myCookie;
+                }
+            }
+        }
+        myCookie myCookie = new myCookie();
+        myCookie.setCookieValue("none_first!");
+        return myCookie;
+    }
+
+
+    static class myCookie{
+        private String cookieValue;
+
+        public void setCookieValue(String cookieValue) {
+            this.cookieValue = cookieValue;
+        }
+
+        public String getCookieValue() {
+            return cookieValue;
+        }
     }
 
     static class Hello{
